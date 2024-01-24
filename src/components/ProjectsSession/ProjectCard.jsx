@@ -1,6 +1,7 @@
 
 import styles from "./ProjectCard.module.css";
 import { getImageUrl } from "../../utils";
+const name = "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";
 
 export const ProjectCard = ({
   project: { title, imageSrc, description, skills, demo, source },
