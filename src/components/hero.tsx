@@ -74,35 +74,7 @@ const RippleButton = React.forwardRef<HTMLButtonElement, RippleButtonProps>(
       </AnimatePresence>
     )
 
-    // If asChild is true, clone the child and add the ripple effect as a sibling
-    if (asChild && React.isValidElement<React.HTMLAttributes<HTMLElement>>(children)) {
-      const childClassName = children.props.className || '';
-      const childOnClick = children.props.onClick;
-      const childChildren = children.props.children;
-      
-      return React.cloneElement(children, {
-        ref: btnRef,
-        className: `relative overflow-hidden ${childClassName} ${className}`.trim(),
-        onClick: (e: React.MouseEvent) => {
-          handleClick(e as React.MouseEvent<HTMLButtonElement>);
-          if (childOnClick) {
-            if (typeof childOnClick === 'function') {
-              childOnClick(e);
-            } else if (typeof childOnClick === 'object' && 'handleEvent' in childOnClick) {
-              childOnClick.handleEvent(e);
-            }
-          }
-        },
-        children: (
-          <>
-            {childChildren}
-            {rippleContent}
-          </>
-        )
-      });
-    }
-
-    // If using with Button component
+    // Simplified implementation that doesn't use asChild
     if (variant || size) {
       return (
         <Button
