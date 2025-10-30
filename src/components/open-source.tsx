@@ -2,7 +2,8 @@
 "use client"
 
 import { Github, GitPullRequest, Star, GitFork, Code2, GitCommit, Users, TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, TooltipProps } from "recharts"
+import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { motion } from "framer-motion"
@@ -129,8 +130,8 @@ export function OpenSource() {
                     cursor={false}
                     content={
                       <ChartTooltipContent
-                        formatter={(value) => [value, '']}
-                        labelFormatter={(label) => `Month: ${label}`}
+                        formatter={(value: any) => [`${value} contributions`, '']}
+                        labelFormatter={(label: string | number) => `Month: ${label}`}
                       />
                     }
                   />
