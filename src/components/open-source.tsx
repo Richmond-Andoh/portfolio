@@ -128,12 +128,15 @@ export function OpenSource() {
                   />
                   <ChartTooltip
                     cursor={false}
-                    content={
-                      <ChartTooltipContent
-                        formatter={(value: any) => [`${value} contributions`, '']}
-                        labelFormatter={(label: string | number) => `Month: ${label}`}
-                      />
-                    }
+                    content={({ active, payload, label }: any) => {
+                      if (!active || !payload || !payload.length) return null;
+                      return (
+                        <div className="bg-background border rounded-md p-2 text-sm">
+                          <p>Month: {label}</p>
+                          <p>{payload[0].value} contributions</p>
+                        </div>
+                      );
+                    }}
                   />
                   <defs>
                     <linearGradient id="colorContributions" x1="0" y1="0" x2="0" y2="1">

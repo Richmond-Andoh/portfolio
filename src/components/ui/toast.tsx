@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
+import * as RadixToast from "@radix-ui/react-toast"
 
 import { cn } from "@/lib/utils"
 
@@ -21,12 +22,12 @@ const toastVariants = cva(
 )
 
 const Toast = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
+  React.ElementRef<typeof RadixToast.Root>,
+  React.ComponentPropsWithoutRef<typeof RadixToast.Root> &
     VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
   return (
-    <ToastPrimitives.Root
+    <RadixToast.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
       {...props}
@@ -36,10 +37,10 @@ const Toast = React.forwardRef<
 Toast.displayName = "Toast"
 
 const ToastAction = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Action>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
+  React.ElementRef<typeof RadixToast.Action>,
+  React.ComponentPropsWithoutRef<typeof RadixToast.Action>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Action
+  <RadixToast.Action
     ref={ref}
     className={cn(
       "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
@@ -51,10 +52,10 @@ const ToastAction = React.forwardRef<
 ToastAction.displayName = "ToastAction"
 
 const ToastClose = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Close>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
+  React.ElementRef<typeof RadixToast.Close>,
+  React.ComponentPropsWithoutRef<typeof RadixToast.Close>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close
+  <RadixToast.Close
     ref={ref}
     className={cn(
       "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
@@ -64,15 +65,15 @@ const ToastClose = React.forwardRef<
     {...props}
   >
     <X className="h-4 w-4" />
-  </ToastPrimitives.Close>
+  </RadixToast.Close>
 ))
 ToastClose.displayName = "ToastClose"
 
 const ToastTitle = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Title>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Title>
+  React.ElementRef<typeof RadixToast.Title>,
+  React.ComponentPropsWithoutRef<typeof RadixToast.Title>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Title
+  <RadixToast.Title
     ref={ref}
     className={cn("text-sm font-semibold", className)}
     {...props}
@@ -81,10 +82,10 @@ const ToastTitle = React.forwardRef<
 ToastTitle.displayName = "ToastTitle"
 
 const ToastDescription = React.forwardRef<
-  React.ElementRef<typeof ToastPrimitives.Description>,
-  React.ComponentPropsWithoutRef<typeof ToastPrimitives.Description>
+  React.ElementRef<typeof RadixToast.Description>,
+  React.ComponentPropsWithoutRef<typeof RadixToast.Description>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Description
+  <RadixToast.Description
     ref={ref}
     className={cn("text-sm opacity-90", className)}
     {...props}
@@ -105,8 +106,8 @@ export {
   type ToastActionElement,
 }
 
-export const ToastProvider = ToastPrimitives.Provider
-export const ToastViewport = ToastPrimitives.Viewport
+export const ToastProvider = RadixToast.Provider
+export const ToastViewport = RadixToast.Viewport
 export const ToastPrimitives = {
   Root: React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
     ({ className, ...props }, ref) => {

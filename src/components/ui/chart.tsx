@@ -50,15 +50,26 @@ const ChartContainer = ({
   )
 }
 
+interface CustomTooltipProps extends Omit<TooltipProps<number, string>, 'content'> {
+  content?: React.ComponentType<any>;
+  payload?: Array<{
+    value: any;
+    name: string;
+    payload: any;
+    color: string;
+    dataKey: string;
+  }>;
+  active?: boolean;
+  label?: string | number;
+}
+
 const ChartTooltip = ({
   active,
   payload,
   label,
   content: Content = ChartTooltipContent as any,
   ...props
-}: TooltipProps<number, string> & {
-  content?: React.ComponentType<any>
-}) => {
+}: CustomTooltipProps) => {
   if (!active || !payload?.length) return null
   return <Content active={active} payload={payload} label={label} {...props} />
 }
