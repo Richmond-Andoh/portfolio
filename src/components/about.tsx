@@ -99,16 +99,25 @@ export function About() {
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-primary/60 to-primary/30 rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-all duration-300 group-hover:duration-500" />
             <div className="relative aspect-square overflow-hidden rounded-2xl border-2 border-transparent group-hover:border-primary/30 transition-all duration-500 bg-card">
-              <motion.img
-                src="/Richie.jpg"
-                alt="Richmond Andoh"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                initial={{ opacity: 0, scale: 1.1 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                priority
-              />
+              <div className="h-full w-full relative">
+                <motion.img
+                  src="/Richie.jpg"
+                  alt="Richmond Andoh"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                />
+                <img
+                  src="/Richie.jpg"
+                  alt=""
+                  className="absolute inset-0 w-full h-full opacity-0"
+                  loading="eager"
+                  fetchPriority="high"
+                  aria-hidden="true"
+                />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                 <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                   <h3 className="text-xl font-bold text-white">Richmond Andoh</h3>
