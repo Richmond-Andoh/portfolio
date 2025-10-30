@@ -17,6 +17,7 @@ interface ProjectCardProps {
   imageUrl: string
   featured?: boolean
   className?: string
+  hoverText?: string
 }
 
 export function ProjectCard({
@@ -27,7 +28,8 @@ export function ProjectCard({
   liveUrl,
   imageUrl,
   featured = false,
-  className = ""
+  className = "",
+  hoverText
 }: ProjectCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.1 })
@@ -41,16 +43,23 @@ export function ProjectCard({
       className={`group relative overflow-hidden rounded-xl border bg-card transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 ${featured ? 'lg:col-span-2' : ''} ${className}`}
     >
       <div className="flex flex-col h-full">
-        <div className="relative h-48 sm:h-56 overflow-hidden">
+        <div className="relative h-64 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 z-0" />
-          <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority={featured}
-          />
+          <div className="absolute inset-0 overflow-y-auto">
+            <Image
+              src={imageUrl}
+              alt={title}
+              width={800}
+              height={600}
+              className="w-full transition-transform duration-700 group-hover:scale-[1.02]"
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'top',
+                minHeight: '100%'
+              }}
+              priority={featured}
+            />
+          </div>
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10 flex items-end">
             <div className="p-6 w-full">
               <h3 className="text-2xl font-bold text-foreground mb-2">{title}</h3>
@@ -97,6 +106,15 @@ export function ProjectCard({
                   <Github className="mr-1.5 h-4 w-4 transition-transform group-hover:scale-110" />
                   <span>Code</span>
                 </Link>
+              )}
+              
+              {liveUrl === "#" && hoverText && (
+                <span className="text-xs text-muted-foreground/70 group relative">
+                  <span className="inline-flex items-center">
+                    <span className="mr-1.5 h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
+                    {hoverText}
+                  </span>
+                </span>
               )}
               
               {liveUrl !== "#" && (

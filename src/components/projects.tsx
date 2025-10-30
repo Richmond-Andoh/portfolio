@@ -43,17 +43,83 @@ export function Projects() {
 
         {/* Featured Projects */}
         {featuredProjects.length > 0 && (
-          <div className="mb-24">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+          <motion.div 
+            className="mb-24"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="grid gap-8 md:grid-cols-2">
               {featuredProjects.map((project, index) => (
-                <ProjectCard
+                <div 
                   key={project.title}
-                  {...project}
-                  className="transition-all duration-300 hover:shadow-xl hover:shadow-primary/5"
-                />
+                  className="group relative overflow-hidden rounded-2xl border bg-card transition-all duration-500 hover:shadow-lg hover:shadow-primary/10"
+                >
+                  <div className="relative h-80 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 z-0" />
+                    <div className="absolute inset-0 overflow-y-auto">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                        style={{
+                          objectFit: 'cover',
+                          objectPosition: 'top',
+                          minHeight: '100%'
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="mb-2 text-xl font-bold text-foreground">{project.title}</h3>
+                    <p className="mb-4 text-muted-foreground">
+                      {project.description.length > 100 
+                        ? `${project.description.substring(0, 100)}...` 
+                        : project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between pt-2">
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+                      >
+                        <span>View Code</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1.5">
+                          <path d="M15 3h6v6"></path>
+                          <path d="M10 14L21 3"></path>
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        </svg>
+                      </a>
+                      {project.liveUrl !== "#" && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                        >
+                          Live Demo
+                        </a>
+                      )}
+                      {project.liveUrl === "#" && project.hoverText && (
+                        <span className="text-sm text-muted-foreground flex items-center">
+                          <span className="mr-2 h-2 w-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                          {project.hoverText}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Other Projects */}

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from 'react';
 import { Github, Linkedin, Mail, Download, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
@@ -14,37 +15,53 @@ const GlobeDemo = dynamic(
   { ssr: false }
 );
 
-const RippleButton = ({ children, className = "", ...props }: any) => {
-  const [ripples, setRipples] = useState<{x: number, y: number, id: number}[]>([])
-  const btnRef = useRef<HTMLButtonElement>(null)
+type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | null | undefined;
+type ButtonSize = 'default' | 'sm' | 'lg' | 'icon' | null | undefined;
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (btnRef.current) {
-      const rect = btnRef.current.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
+interface RippleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {
+  children: React.ReactNode;
+  className?: string;
+  asChild?: boolean;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+}
+
+const RippleButton = React.forwardRef<HTMLButtonElement, RippleButtonProps>(
+  ({ children, className = "", asChild = false, variant, size, ...props }, ref) => {
+    const [ripples, setRipples] = useState<{x: number, y: number, id: number}[]>([])
+    const btnRef = useRef<HTMLButtonElement>(null)
+    
+    // Combine forwarded ref with local ref
+    React.useEffect(() => {
+      if (!ref) return;
       
-      setRipples(prev => [...prev, { x, y, id: Date.now() }])
-      
-      if (props.onClick) {
-        props.onClick(e)
+      if (typeof ref === 'function') {
+        ref(btnRef.current);
+      } else {
+        ref.current = btnRef.current;
+      }
+    }, [ref]);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (btnRef.current) {
+        const rect = btnRef.current.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
+        
+        setRipples(prev => [...prev, { x, y, id: Date.now() }])
+        
+        if (props.onClick) {
+          props.onClick(e)
+        }
       }
     }
-  }
 
-  return (
-    <button 
-      ref={btnRef}
-      {...props}
-      onClick={handleClick}
-      className={`relative overflow-hidden ${className}`}
-    >
-      {children}
+    const rippleContent = (
       <AnimatePresence>
         {ripples.map((ripple) => (
           <motion.span
             key={ripple.id}
-            className="absolute rounded-full bg-white/20"
+            className="absolute rounded-full bg-white/20 pointer-events-none"
             initial={{ width: 0, height: 0, x: ripple.x, y: ripple.y, opacity: 1 }}
             animate={{ width: 500, height: 500, x: ripple.x - 250, y: ripple.y - 250, opacity: 0 }}
             exit={{ opacity: 0 }}
@@ -55,9 +72,69 @@ const RippleButton = ({ children, className = "", ...props }: any) => {
           />
         ))}
       </AnimatePresence>
-    </button>
-  )
-}
+    )
+
+    // If asChild is true, clone the child and add the ripple effect as a sibling
+    if (asChild && React.isValidElement<React.HTMLAttributes<HTMLElement>>(children)) {
+      const childClassName = children.props.className || '';
+      const childOnClick = children.props.onClick;
+      const childChildren = children.props.children;
+      
+      return React.cloneElement(children, {
+        ref: btnRef,
+        className: `relative overflow-hidden ${childClassName} ${className}`.trim(),
+        onClick: (e: React.MouseEvent) => {
+          handleClick(e as React.MouseEvent<HTMLButtonElement>);
+          if (childOnClick) {
+            if (typeof childOnClick === 'function') {
+              childOnClick(e);
+            } else if (typeof childOnClick === 'object' && 'handleEvent' in childOnClick) {
+              childOnClick.handleEvent(e);
+            }
+          }
+        },
+        children: (
+          <>
+            {childChildren}
+            {rippleContent}
+          </>
+        )
+      });
+    }
+
+    // If using with Button component
+    if (variant || size) {
+      return (
+        <Button
+          ref={btnRef}
+          variant={variant}
+          size={size}
+          {...props}
+          onClick={handleClick}
+          className={`relative overflow-hidden ${className}`}
+        >
+          {children}
+          {rippleContent}
+        </Button>
+      )
+    }
+
+    // Default button with ripple effect
+    return (
+      <button 
+        ref={btnRef}
+        {...props}
+        onClick={handleClick}
+        className={`relative overflow-hidden ${className}`}
+      >
+        {children}
+        {rippleContent}
+      </button>
+    )
+  }
+)
+
+RippleButton.displayName = 'RippleButton'
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)

@@ -12,8 +12,8 @@ const certifications = [
     issuedDate: "March 2024",
     credentialId: "ABC123XYZ456",
     skills: ["AWS", "Cloud Computing", "Cloud Architecture", "Security"],
-    image: "/aws-certified-cloud-practitioner.png",
-    verifyUrl: "https://www.credly.com/badges/your-badge-id"
+    image: "/projects/certificate.png",
+    verifyUrl: "https://www.credly.com/badges/2e5c6513-f613-4326-a44b-54c7693f81d7/public_url"
   }
 ]
 

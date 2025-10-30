@@ -1,20 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Navbar } from "./navbar";
 import { FloatingNav } from "./ui/floating-navbar";
-import { IconHome, IconUser, IconCode, IconBriefcase, IconBrandGithub, IconMail } from "@tabler/icons-react";
+import { IconHome, IconUser, IconCode, IconBriefcase, IconBrandGithub, IconMail, IconMoon, IconSun } from "@tabler/icons-react";
+import { useTheme } from "next-themes";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    setIsMounted(true);
   }, []);
 
   const navItems = [
@@ -50,24 +46,29 @@ export function Navigation() {
     },
   ];
 
+  // Add theme toggle button to nav items
+  const navItemsWithThemeToggle = [
+    ...navItems,
+    {
+      name: theme === 'dark' ? 'Light Mode' : 'Dark Mode',
+      link: '#',
+      icon: theme === 'dark' ? (
+        <IconSun className="h-4 w-4 text-neutral-500 dark:text-white" />
+      ) : (
+        <IconMoon className="h-4 w-4 text-neutral-500 dark:text-white" />
+      ),
+      onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark')
+    }
+  ];
+
+  if (!isMounted) return null;
+
   return (
-    <>
-      {/* Show regular navbar on mobile and when not scrolled */}
-      <div className="block md:hidden">
-        <Navbar />
-      </div>
-      
-      {/* Show floating navbar on desktop when scrolled */}
-      {isScrolled && (
-        <div className="hidden md:block">
-          <FloatingNav navItems={navItems} />
-        </div>
-      )}
-      
-      {/* Always show regular navbar on desktop when not scrolled */}
-      <div className="hidden md:block">
-        {!isScrolled && <Navbar />}
-      </div>
-    </>
+    <div className="fixed top-4 inset-x-0 z-50 px-4">
+      <FloatingNav 
+        navItems={navItemsWithThemeToggle} 
+        className="max-w-4xl mx-auto"
+      />
+    </div>
   );
 }

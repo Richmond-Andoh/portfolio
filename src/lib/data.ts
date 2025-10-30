@@ -6,6 +6,7 @@ interface Project {
   liveUrl: string;
   imageUrl: string;
   featured?: boolean;
+  hoverText?: string;
 }
 
 export const projects: Project[] = [
@@ -14,8 +15,8 @@ export const projects: Project[] = [
     description: "A modern hospital website built with Next.js and Tailwind CSS, featuring appointment booking and doctor profiles.",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "ShadCN/UI"],
     githubUrl: "https://github.com/Richmond-Andoh/mount-carmel",
-    liveUrl: "#",
-    imageUrl: "/projects/mount-carmel.jpg",
+    liveUrl: "https://mount-carmel.vercel.app/",
+    imageUrl: "/projects/mount-carmel.png",
     featured: true
   },
   {
@@ -23,8 +24,8 @@ export const projects: Project[] = [
     description: "A blockchain-based platform to support people with disabilities through transparent funding and assistance programs.",
     tags: ["Blockchain", "Solidity", "React", "Node.js", "Web3"],
     githubUrl: "https://github.com/Richmond-Andoh/accesschain-core",
-    liveUrl: "#",
-    imageUrl: "/projects/accesschain.jpg",
+    liveUrl: "https://accesschain-core.vercel.app/",
+    imageUrl: "/projects/accesschain.png",
     featured: true
   },
   {
@@ -33,7 +34,8 @@ export const projects: Project[] = [
     tags: ["React", "Context API", "Fake Store API", "Tailwind CSS"],
     githubUrl: "https://github.com/Richmond-Andoh/react-shopping-cart-fakestoreapi",
     liveUrl: "#",
-    imageUrl: "/projects/shopping-cart.jpg"
+    imageUrl: "/placeholder.svg",
+    hoverText: "Yet to be deployed"
   },
   {
     title: "EmployWise",
@@ -41,15 +43,16 @@ export const projects: Project[] = [
     tags: ["MERN Stack", "JWT", "REST API", "Redux"],
     githubUrl: "https://github.com/Richmond-Andoh/employwise_user_management",
     liveUrl: "#",
-    imageUrl: "/projects/employwise.jpg"
+    imageUrl: "/placeholder.svg",
+    hoverText: "Yet to be deployed"
   },
   {
     title: "AkokoMarket",
     description: "Frontend for an agricultural e-commerce platform connecting farmers directly with consumers.",
     tags: ["React", "Redux", "Material-UI", "REST API"],
     githubUrl: "https://github.com/AgroInnovaGH/akokomarket-ecom-frontend",
-    liveUrl: "#",
-    imageUrl: "/projects/akokomarket.jpg"
+    liveUrl: "https://akokomarket-ecom-landing.vercel.app/",
+    imageUrl: "/projects/akoko-market.png"
   },
   {
     title: "CodeNest",
@@ -57,7 +60,16 @@ export const projects: Project[] = [
     tags: ["MERN Stack", "GraphQL", "Apollo", "JWT"],
     githubUrl: "https://github.com/Richmond-Andoh/CodeNest",
     liveUrl: "#",
-    imageUrl: "/projects/codenest.jpg"
+    imageUrl: "/placeholder.svg",
+    hoverText: "Yet to be deployed"
+  },
+  {
+    title: "Google Data Analytics Professional Certificate",
+    description: "Earned a professional certificate from Google in Data Analytics, demonstrating proficiency in data analysis, visualization, and SQL.",
+    tags: ["Data Analysis", "SQL", "Tableau", "R Programming", "Google Analytics"],
+    githubUrl: "#",
+    liveUrl: "https://www.credly.com/badges/2e5c6513-f613-4326-a44b-54c7693f81d7/public_url",
+    imageUrl: "/projects/certificate.png"
   }
 ]
 
