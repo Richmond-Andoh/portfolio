@@ -209,7 +209,7 @@ export function Hero() {
                 className="group relative overflow-hidden rounded-full border-2 px-8 py-3 font-medium transition-all duration-300 hover:border-primary/30 hover:bg-primary/5"
               >
                 <a 
-                  href="/Richmond_Andoh_Modern_CV.pdf" 
+                  href="/Richmond_Andoh_CV.pdf" 
                   download
                   className="flex items-center"
                 >
