@@ -52,7 +52,7 @@ export function Contact() {
                     href="mailto:contact@richmondandoh.com" 
                     className="text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
-                    richmondandoh@example.com
+                    richmondandoh00@gmail.com.com
                   </a>
                 </div>
               </div>
@@ -67,7 +67,7 @@ export function Contact() {
                     href="tel:+233XXXXXXXX" 
                     className="text-muted-foreground hover:text-primary hover:underline transition-colors"
                   >
-                    +1 (234) 567-890
+                    +233 (557) 010-890
                   </a>
                 </div>
               </div>
